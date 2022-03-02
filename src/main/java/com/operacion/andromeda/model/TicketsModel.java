@@ -1,13 +1,20 @@
 package com.operacion.andromeda.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "tickets")
@@ -17,9 +24,6 @@ public class TicketsModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer id_ticket;
-	
-	@Column
-	private int id_usuario;
 	
 	@Column
 	private int id_direccion_envio;
@@ -34,7 +38,12 @@ public class TicketsModel {
 	private String estatus_del_pedido;
 	
 	@Column
-	private Timestamp fecha;//preguntar sobre esto
+	private LocalDateTime fecha;//preguntar sobre esto
+	
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty(access = Access.READ_WRITE)
+    @JoinColumn(name = "id_usuario")
+    private UsuariosModel usuariosModel;
 
 	public TicketsModel() {
 
@@ -47,14 +56,14 @@ public class TicketsModel {
 	public void setId_ticket(Integer id_ticket) {
 		this.id_ticket = id_ticket;
 	}
-	
-	public int getId_usuario() {
-		return id_usuario;
-	}
 
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
-	}
+//	public int getId_usuario() {
+//		return id_usuario;
+//	}
+//
+//	public void setId_usuario(int id_usuario) {
+//		this.id_usuario = id_usuario;
+//	}
 
 	public int getId_direccion_envio() {
 		return id_direccion_envio;
@@ -88,18 +97,27 @@ public class TicketsModel {
 		this.estatus_del_pedido = estatus_del_pedido;
 	}
 
-	public Timestamp getFecha() {
+	public LocalDateTime getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
+	}
+
+	public UsuariosModel getUsuariosModel() {
+		return usuariosModel;
+	}
+
+	public void setUsuariosModel(UsuariosModel usuariosModel) {
+		this.usuariosModel = usuariosModel;
 	}
 
 	@Override
 	public String toString() {
-		return "TicketsModel [id_ticket=" + id_ticket + ", id_usuario=" + id_usuario + ", id_direccion_envio="
+		return "TicketsModel [id_ticket=" + id_ticket + ", id_direccion_envio="
 				+ id_direccion_envio + ", id_metodo_envio=" + id_metodo_envio + ", id_forma_de_pago=" + id_forma_de_pago
-				+ ", estatus_del_pedido=" + estatus_del_pedido + ", fecha=" + fecha + "]";
+				+ ", estatus_del_pedido=" + estatus_del_pedido + ", fecha=" + fecha + ", usuariosModel=" + usuariosModel
+				+ "]";
 	}
 }

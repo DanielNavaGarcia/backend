@@ -1,5 +1,6 @@
 package com.operacion.andromeda.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,13 @@ public class TicketsController {
 	}
 
 	@GetMapping("/tickets")
-	public ArrayList<TicketsModel> obtenerDato(){
-		return ticketsService.obtenerDatos();	
+	public ArrayList<TicketsModel> obtenerTodosTickets(){
+		return (ArrayList<TicketsModel>) ticketsService.obtenerTodosTickets();	
 	}
 
 	@PostMapping("/tickets")
     public TicketsModel guardarDatos(@RequestBody TicketsModel ticketsModel) {
+		ticketsModel.setFecha(LocalDateTime.now());
     	return ticketsService.guardarDatos(ticketsModel);
     }
 	

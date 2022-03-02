@@ -1,6 +1,9 @@
 package com.operacion.andromeda.controller;
 
+
+
 import java.util.ArrayList;
+//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,8 +25,8 @@ public class UsuariosController {
 	}
 	
 	@GetMapping("/usuarios")
-	public ArrayList<UsuariosModel> obtenerDato(){
-		return usuariosService.obtenerDatos();	
+	public ArrayList<UsuariosModel> obtenerTodosUsuarios(){
+		return (ArrayList<UsuariosModel>) usuariosService.obtenerTodosUsuarios();	
 	}
 
 	@PostMapping("/usuarios")
